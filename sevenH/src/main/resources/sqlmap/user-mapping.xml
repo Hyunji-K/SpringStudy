@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user_ns">
+    <!--  디폴트 설정 
+        네임스페이스에 <cache> 태그를 설정하고 
+        그 네임스페이스에 있는 쿼리들의 결과집합에 대해서 캐시처리        
+		mapper XML의 모든 select 결과 캐시
+		mapper XML의 insert, update, delete는 모두 캐시를 지움
+	-->
+    <!-- <cache/>  -->
+    
+     <!-- 
+    
+    DB에 60초(단위는 ms) 간격으로 DBIO가 발생 (설정된 캐시를 얼마 동안 유지할지 설정)
+    flushInterval="60000"
+    알고리즘 선택
+    	- FIFO 캐시 알고리즘  : 먼저 만들어진 캐시가 먼저 삭제
+    	- LRU  : 가장 오랫동안 사용하지 않은 캐시를 지우는 알고리즘. 기본값. (기본은 가장 오랫동안 사용하지 않은 캐시를 지우는 알고리즘(LRU)) 
+    size : 캐시에 저장할 객체의 수
+    readOnly :모든 사용자간의 전역적 공유 캐시 데이터를 읽기만 가능하게 설정, cache를 변경하지 않음(기본값)   캐시를 적용할 쿼리 속성에 useCache="true"를 추가
+     -->
+    <!-- 기본설정이므로 생략가능-->
+	<cache eviction="LRU" flushInterval="60000" size="1024"  readOnly="true" /> 
+    
+    <cache eviction="FIFO" flushInterval="60000" size="1024" readOnly="true"/> 
+    
+	<resultMap id="UserResult" type="User">
+		<result property="userID" column="u_id"/>
+		<result property="userPwd" column="u_pwd"/>
+		<result property="userName" column="u_name"/>
+		<result property="userEmail" column="u_email"/>
+		<result property="userPhone" column="u_phone"/>
+		<result property="userAddress" column="u_address"/>
+		<result property="userRegdate" column="u_regdate"/>
+		<result property="adminYN" column="admin_YN"/>
+	</resultMap>
+	
+	<!--ID 중복체크-->
+	<select id="checkID" parameterType="String" resultType="int"  >
+		select count(*)
+		from s_user
+		where u_ID=#{userID}   
+	</select>
+	
+	<!-- 회원 조회-->
+	<select id="selectByUserID" parameterType="Map" resultMap="UserResult" useCache="true"  >
+		select * from s_user
+		where u_ID=#{userID}   
+	</select>
+		
+	<!-- 회원 가입 -->
+	<insert id="insertUser" parameterType="User">
+		INSERT INTO s_user
+		VALUES(#{userID},#{userPwd},#{userName},#{userEmail},#{userPhone}
+		       ,#{userAddress},sysdate,#{adminYN})
+	</insert>
+		 
+	
+	<!-- 회원 정보 수정 -->
+	<update id="updateUser" parameterType="User">
+	update s_user set
+	u_Pwd=#{userPwd} ,u_Name=#{userName}
+	where u_ID=#{userID}
+	</update>
+		
+	<!-- 회원 탈퇴 -->
+	<delete id="deleteUser" parameterType="String">
+		delete from s_user
+		where  u_ID=#{userID}			
+	</delete>	
+	
+</mapper>
