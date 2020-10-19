@@ -11,7 +11,7 @@
 <link href ="resources/css/style.css" rel ="stylesheet" />
 <!-- <link rel="stylesheet" href="css/bootstrap.min.css">  --><!-- 부트스트랩 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <title>회원 가입</title>
 </head>
 <script>
@@ -31,13 +31,12 @@ function checkUserIdExist(){
 	}
 	
 	$.ajax({
-		url : 'ID_Check',
+		url : 'ID_Check.do',
 		type : 'POST',
-		dataType : 'text', //서버로부터 받는 데이터의 타입
 		contentType : 'text/plain; charset=utf-8;', //서버에 보내는 데이터의 타입, text/plain =텍스트 파일 기본값
-		data : {userID: $("#userID").val()},
+		data : userID,
 		success : function(result){
-			if(result == "0"){
+			if(result == 0){
 				alert("사용하실 수 있는 아이디입니다.");
 			}else{
 				alert("중복된 아이디가 존재합니다.");
