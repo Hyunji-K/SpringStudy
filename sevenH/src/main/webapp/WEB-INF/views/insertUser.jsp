@@ -34,7 +34,8 @@ function checkUserIdExist(){
 		url : 'ID_Check.do',
 		type : 'POST',
 		contentType : 'text/plain; charset=utf-8;', //서버에 보내는 데이터의 타입, text/plain =텍스트 파일 기본값
-		data : userID,
+		/* dataType : 'json', */
+		data : {userID:$("#userID").val()},
 		success : function(result){
 			if(result == 0){
 				alert("사용하실 수 있는 아이디입니다.");
@@ -43,7 +44,7 @@ function checkUserIdExist(){
 			}
 		},
 		error : function(){
-			
+			alert('error');
 		}
 	
 	});

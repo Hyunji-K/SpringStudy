@@ -5,5 +5,5 @@ import com.seven.team01.model.User;
 public interface UserService {
 
 	public void createUser(User user);
-	public String checkID(String userID);
+	public int checkID(String userID);
 }

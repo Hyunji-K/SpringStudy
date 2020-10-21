@@ -48,7 +48,7 @@ public class UserCreateController {
 		//클라이언트가 보낸 ID값
 		String ID = paramData.trim();
 		System.out.println("controller: "+ID);
-		int result = Integer.parseInt(userService.checkID(ID));
+		int result = userService.checkID(ID);
 		return result;
 	}
 }	

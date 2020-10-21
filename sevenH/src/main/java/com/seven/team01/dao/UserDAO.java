@@ -15,9 +15,8 @@ public class UserDAO {
 		System.out.println(rowcnt + "행 삽입");
 		}
 
-	public String checkID(String userID) {
-		int n = sqlSessionTemplate.selectOne("user_ns.checkID", userID);
-		String result = Integer.toString(n);
+	public int checkID(String userID) {
+		int result = sqlSessionTemplate.selectOne("user_ns.checkID", userID);
 		return result;
 	}
 	
