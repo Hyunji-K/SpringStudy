@@ -29,15 +29,16 @@ function checkUserIdExist(){
 		alert('아이디를 입력해주세요');
 		return;
 	}
-	
+	alert(userID);
 	$.ajax({
 		url : 'ID_Check.do',
 		type : 'POST',
-		contentType : 'text/plain; charset=utf-8;', //서버에 보내는 데이터의 타입, text/plain =텍스트 파일 기본값
-		/* dataType : 'json', */
-		data : {userID:$("#userID").val()},
-		success : function(result){
-			if(result == 0){
+		data : {
+			"userID" : userID
+		},
+		dataType : 'json', 
+		success : function(data){
+			if(data == 0){
 				alert("사용하실 수 있는 아이디입니다.");
 			}else{
 				alert("중복된 아이디가 존재합니다.");
