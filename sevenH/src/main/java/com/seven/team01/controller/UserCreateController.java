@@ -42,11 +42,9 @@ public class UserCreateController {
 
 	@ResponseBody //자바 객체를 HTTP 응답 몸체로 전송
 	@RequestMapping(value="/ID_Check.do", method=RequestMethod.POST)
-	public int checkID(@RequestBody String paramData) { //@RequestBody: HTTP 요청 몸체를 자바 객체로 전달받음
-		System.out.println(paramData);
-		//클라이언트가 보낸 ID값
-		String ID = paramData.trim();
-		System.out.println("controller: "+ID);
+	public int checkID(HttpServletRequest request) { //@RequestBody: HTTP 요청 몸체를 자바 객체로 전달받음
+		String ID = request.getParameter("userID");
+		System.out.println("controller:checkID>> "+ID);
 		int result = userService.checkID(ID);
 		return result;
 	}

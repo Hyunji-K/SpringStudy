@@ -29,12 +29,12 @@ function checkUserIdExist(){
 		alert('아이디를 입력해주세요');
 		return;
 	}
-	alert(userID);
+	
 	$.ajax({
 		url : 'ID_Check.do',
 		type : 'POST',
 		data : {
-			"userID" : userID
+			"userID" : $("#userID").val()
 		},
 		dataType : 'json', 
 		success : function(data){
